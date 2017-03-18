@@ -26,11 +26,15 @@ class Pokemon{
     show () {
         console.log(this.name, this.level);
     }
+    valueOf(){
+        return this.level;
+    }
 }
 
 class PokemonList extends Array{
-    constructor (...pokemons){
+    constructor (name, ...pokemons){
         super();
+        this.name = name;
         for (let p of pokemons) {
             this.push(p);
         }
@@ -38,8 +42,15 @@ class PokemonList extends Array{
     add(name, level){
         this.push(new Pokemon (name, level));
     }
+    show(){
+        let show = `In list ${this.name} - ${this.length} pokemons: `;
+        for (let pokemon of this) {
+            show += pokemon.name + `(${pokemon.level}) `;
+        }
+        console.log(show);
+    }
     max(){
-
+        return Math.max(...this);
     }
     static changeList(indexFrom, from, to){
         to.push(from[indexFrom]);
@@ -47,21 +58,21 @@ class PokemonList extends Array{
     }
 }
 
-
 let p1 = new Pokemon('Tor', 31),
     p2 = new Pokemon('Buba', 11),
     p3 = new Pokemon('Kiri', 19),
-    p4 = new Pokemon('Fif', 2),
     p5 = new Pokemon();
 
 p5.show();
 
-let found  = new PokemonList (p1, p2),
-    lost  = new PokemonList (p3, p4, p5);
-debugger
-lost.add('Newbie');
+let found  = new PokemonList ('found', p1, p2),
+    lost  = new PokemonList ('lost', p3, p5);
 
+lost.add('Newbie');
+console.log('Max level', found.max());
 PokemonList.changeList(0, lost, found);
-console.log(lost, found);
+found.show();
+lost.show();
+
 
 
