@@ -16,7 +16,7 @@
  Переопределите и используйте метод valueOf у покемонов, для решения этой задачи.
  */
 
-// 'use strict';
+'use strict';
 
 class Pokemon{
     constructor (name = 'NoName', level = 0){
