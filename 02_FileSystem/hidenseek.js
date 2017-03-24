@@ -10,7 +10,7 @@ function random(min, max) {//from min to max, including max
 
 exports.hide = function (folderName, pokemonList, callback) {
     let dirPromises = [];
-
+    fs.mkdirSync(hidePlace);
     for(let i = 0; i < 10; i++){
         dirPromises.push(new Promise(
             (resolve) => { fs.mkdir(hidePlace + i, error => {
