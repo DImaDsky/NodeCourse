@@ -12,14 +12,17 @@ let pokemons = new PokemonList ('pokemonsHere',p1, p2, p3, p4, p5);
 
 pokemons.show();
 
-hidenseek.hide('3', pokemons, (hidden)=>{
-    console.log('some pokemons lost');
-    pokemons.show();
-    hidden.show();
-    hidenseek.seek('3', find => {
-        find.show();
-    });
-});
+let hide = hidenseek.hide('./field/', pokemons);
+hide.then(
+    (hidden)=>{
+        console.log('some pokemons lost');
+        pokemons.show();
+        hidden.show();
+        hidenseek.seek('./field/', find => {
+            find.show();
+        });
+    }
+);
 
 
 // process.argv.forEach(z=>{
