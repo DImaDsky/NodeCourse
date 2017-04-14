@@ -17,12 +17,12 @@ hide.then(
     (hidden)=>{
         console.log('some pokemons lost');
         pokemons.show();
-        hidden.show();
-        hidenseek.seek('./field/', find => {
-            find.show();
-        });
+        hidden[0].show();
+        hidenseek.seek('./field/').then( find => {
+            find[0].show();
+        }).catch(console.log);
     }
-);
+).catch(console.log);
 
 
 // process.argv.forEach(z=>{
