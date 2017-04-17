@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    RPC:<input type="radio" name="apiType" value="rpc" class="apiType" checked>
+    REST:<input type="radio" name="apiType" value="rest" class="apiType">
+</div>
+<div class="left">
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Score</th>
+            <th><button id="getAll">Get all from server</button></th>
+            <th><button id="addNew">Add Empty</button></th>
+        </tr>
+        </thead>
+        <tbody id="usersList"></tbody>
+    </table>
+</div>
+<div class="right hidden">
+    <table>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" id="name"></td>
+        </tr>
+        <tr>
+            <td>Score</td>
+            <td><input type="text" id="score"></td>
+        </tr>
+        <tr><td colspan="2"><button id="edit">Edit</button></td></tr>
+    </table>
+    <input type="hidden" id="userId">
+</div>
+
+<script src="frontJs/jquery-1.12.0.min.js"></script>
+<script src="frontJs/main.js"></script>
+
+
+<style>
+    table{
+        border-collapse: collapse;
+    }
+    td, th{
+        border: 1px solid black;
+        padding: 4px 8px;
+
+    }
+    .left{
+        float: left;
+        width: 400px;
+    }
+    .right{
+        float: left;
+        width: 400px;
+    }
+    .edit, .delete{
+        cursor: pointer;
+        color: #3333ff
+    }
+    .hidden{
+        display: none;
+    }
+</style>
+</body>
+</html>
