@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+</head>
+<body>
+
+<!--<input type="text" id="new">-->
+<!--<div id="messages"></div>-->
+
+<div id="chatBlock">
+    <div class="chatArea">
+        <div class="messages"></div>
+    </div>
+    <input class="inputMessage" placeholder="Type here..."/>
+</div>
+
+<div id="loginBlock">
+    <h3 class="title">Enter username</h3>
+    <input class="usernameInput" type="text" maxlength="14" />
+</div>
+
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/main.js"></script>
+<!--<script src="../socket.io.js"></script>-->
+<!--<script src="main.js"></script>-->
+
+<style>
+    #chatBlock{
+        display: none;
+    }
+    .chatArea{
+        height: 300px;
+        overflow: auto;
+    }
+    .newUser{
+        color: fuchsia;
+    }
+    .usr{
+        color: #3333ff;
+    }
+</style>
+
+</body>
+</html>
