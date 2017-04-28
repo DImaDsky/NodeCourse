@@ -19,3 +19,6 @@ db.users.find()
 
 db.users.remove({name:"Vanya"});
 db.users.find()
+
+
+mongoshef core

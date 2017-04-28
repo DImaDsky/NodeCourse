@@ -34,7 +34,7 @@ class PokemonList extends Array{
                 max = p;
             }
         });
-        return max
+        return max;
         //Math.max(...this);
     }
     static changeList(nameFrom, from, to){

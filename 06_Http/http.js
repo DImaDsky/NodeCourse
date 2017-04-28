@@ -9,7 +9,7 @@ const querystring = require('querystring');
 const apiOptions = {
     hostname: 'netology.tomilomark.ru',
     port: 80,
-    path: '/api/v1/hash',
+    path: '/api/users/hash',
     method: 'POST',
     headers: {
         'Firstname': 'someName',

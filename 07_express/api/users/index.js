@@ -39,7 +39,6 @@ app.delete('/:id',(req, res) => {
 });
 
 app.all('*', (req, res) => {
-    debugger
     if(req.method == 'OPTIONS'){ // Вместо PUT / DELETE приходит OPTIONS из Хрома ????
         res.send(405, 'Wrong request');
         return;

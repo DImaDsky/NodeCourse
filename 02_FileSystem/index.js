@@ -19,7 +19,7 @@ hide.then(
         pokemons.show();
         hidden[0].show();
         hidenseek.seek('./field/').then( find => {
-            find[0].show();
+            find.show();
         }).catch(console.log);
     }
 ).catch(console.log);

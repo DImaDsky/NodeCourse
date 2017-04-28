@@ -5,6 +5,36 @@ let fs = require('fs'),
 function random(min, max) {//from min to max, including max
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+fs.writeFilePromise = function (path, text, prevResult){
+    return new Promise(resolve=>{
+        fs.writeFile(path, text, (err)=>{
+            if(err) { console.log(err) }
+            resolve(prevResult)
+        })
+    });
+};
+
+fs.mkdirPromise = function (dir) {
+    return new Promise(resolve => {
+        fs.mkdir(dir, err =>{
+            if (err) {console.log('dir exists')}
+            resolve()
+        })
+    })
+};
+
+fs.readFilePromise = function (dir, encode, cb) {
+    if(!fs.existsSync(dir)){
+        return;
+    }
+    return new Promise(resolve => {
+        fs.readFile(dir, encode, (err, data) => {
+            if (err) { throw err }
+            let result = cb(data);
+            resolve(result);
+        })
+    })
+};
 
 exports.hide = function (hidePlace, pokemonList) {
         let dirPromises = [];
@@ -12,12 +42,7 @@ exports.hide = function (hidePlace, pokemonList) {
             fs.mkdirSync(hidePlace);
         }
         for(let i = 0; i < 10; i++){
-            dirPromises.push(new Promise(
-                (resolve) => { fs.mkdir(hidePlace + i, error => {
-                    //if (error) {console.log('dir exists')}
-                    resolve();
-                })}
-            ));
+            dirPromises.push(fs.mkdirPromise(hidePlace + i));
         }
 
         return Promise.all(dirPromises).then( () => {
@@ -32,12 +57,7 @@ exports.hide = function (hidePlace, pokemonList) {
                 console.log('Lost:', text);
                 hidden.push(pokemonList[hide]);
                 pokemonList.splice(hide,1);
-                written.push(new Promise(resolve => {
-                    fs.writeFile(hidePlace + folderN + "/pokemon.txt", text, (err) => {
-                        if(err) { console.log(err) }
-                        resolve(hidden);
-                    });
-                }));
+                written.push(fs.writeFilePromise(hidePlace + folderN + "/pokemon.txt", text, hidden));
             }
             return Promise.all(written)//.then( () => {returnResolve(hidden)} );
         }).catch(console.log);
@@ -46,14 +66,9 @@ exports.hide = function (hidePlace, pokemonList) {
 exports.seek = function (hidePlace) {
     let find = new PokemonList('find'),
         promises = [];
-    for(let i = 0; i < 10;i++){
-        promises.push(new Promise(resolve => {
-            if(!fs.existsSync(hidePlace + i + "/pokemon.txt")){
-                resolve();
-                return;
-            }
-            fs.readFile(hidePlace + i + "/pokemon.txt", 'utf8', (err, data) => {
-                if (err) { throw err }
+    for(let i = 0; i < 10; i++){
+        promises.push(
+            fs.readFilePromise(hidePlace + i + "/pokemon.txt", 'utf8', data => {
                 let pokemonArr,
                     pokemonStrings = data.split(';');
 
@@ -64,58 +79,10 @@ exports.seek = function (hidePlace) {
                 });
 
                 console.log('data', data);
-                resolve(find);
-            });
-        }))
+                return find;
+            })
+        )
     }
-    return Promise.all(promises);
+
+    return Promise.all(promises).then( () => {return find} );
 };
-/*
-let z = new Promise(done=>{
-    console.log('z');
-    return new Promise(ready=>{
-        setTimeout(()=>{
-            console.log('z->ready');
-            ready(); done();
-        },4000)
-    });
-
-});
-let x = z.then(
-    function (zzz) {
-        console.log('zzz',zzz)
-    }
-    // new Promise(resolve=>{
-    // setTimeout(()=>{
-    //     console.log('resolve');
-    //     resolve()
-    // },2000)
-    // })
-);
-x.then(()=>{console.log('All');})
-
-
-function  getUserByName(name) {
-    return new Promise(done=>{
-        setTimeout(()=>{done(33333)}, 2000)
-    });
-}
-getUserByName('nolan').then(function (user) {
-    console.log('user',user);
-    return new Promise(done=>{
-        setTimeout(()=>{done(44444)}, 2000)
-    });
-    // if (inMemoryCache[user.id]) {
-    //     // Данные этого пользователя уже есть,
-    //     // возвращаем сразу
-    //     return inMemoryCache[user.id];
-    // }
-    // // А вот про этого пока не знаем,
-    // // вернем промис запроса
-    // return getUserAccountById(user.id);
-})
-    .then(function (userAccount) {
-        console.log('userAccount',userAccount);
-        // Я знаю все о пользователе!
-    });
-    /**/
