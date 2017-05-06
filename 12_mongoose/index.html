@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="shadow_block"></div>
+<div class="info_block users">
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Tel</th>
+            <th><button id="getAll">Get all from server</button></th>
+            <th><button id="addNew">Add Empty</button></th>
+        </tr>
+        </thead>
+        <tbody id="usersList"></tbody>
+    </table>
+
+    <div class="edit_block">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" id="name"></td>
+            </tr>
+            <tr>
+                <td>Surame</td>
+                <td><input type="text" id="surname"></td>
+            </tr>
+            <tr>
+                <td>Tel</td>
+                <td><input type="text" id="tel"></td>
+            </tr>
+            <tr><td colspan="2">
+                <button id="editUser">Edit</button>
+                <button class="cancel">Cancel</button>
+            </td></tr>
+        </table>
+        <input type="hidden" id="userId">
+    </div>
+</div>
+<hr>
+<div class="info_block tasks">
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Tel</th>
+            <th><button id="getAllTask">Get all from server</button></th>
+            <th><button id="addNewTask">Add Empty</button></th>
+        </tr>
+        </thead>
+        <tbody id="tasksList"></tbody>
+    </table>
+
+    <div class="edit_block">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" id="taskName"></td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td><input type="text" id="taskDescr"></td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>
+                    <select name="" id="taskStatus">
+                        <option value="1">active</option>
+                        <option value="0">inactive</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>User</td>
+                <td>
+                    <select name="" id="taskUser">
+
+                    </select>
+                </td>
+            </tr>
+            <tr><td colspan="2">
+                <button id="editTasks">Edit</button>
+                <button class="cancel">Cancel</button>
+            </td></tr>
+        </table>
+        <input type="hidden" id="taskId">
+    </div>
+</div>
+
+<script src="frontJs/jquery-1.12.0.min.js"></script>
+<script src="frontJs/main.js"></script>
+
+
+<style>
+    table{
+        border-collapse: collapse;
+    }
+    td, th{
+        border: 1px solid black;
+        padding: 4px 8px;
+    }
+    .info_block{
+        position: relative;
+    }
+    .shadow_block{
+        display: none;
+        opacity: 0.2;
+        background: black;
+        position: absolute;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+    }
+    .edit_block{
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        display: none;
+        background: white;
+        z-index: 110;
+        padding: 10px;
+        border: 2px solid #000;
+    }
+    .edit, .delete{
+        cursor: pointer;
+        color: #3333ff
+    }
+    .hidden{
+        display: none;
+    }
+</style>
+</body>
+</html>
