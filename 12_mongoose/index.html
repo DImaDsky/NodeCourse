@@ -44,13 +44,16 @@
 </div>
 <hr>
 <div class="info_block tasks">
+    <input type="text" id="searchFor">
+    <button id="searchTask">search by name</button>
     <table>
         <thead>
         <tr>
             <th>Name</th>
-            <th>Surname</th>
-            <th>Tel</th>
-            <th><button id="getAllTask">Get all from server</button></th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>User</th>
+            <th><button id="getAllTasks">Get all from server</button></th>
             <th><button id="addNewTask">Add Empty</button></th>
         </tr>
         </thead>
@@ -71,8 +74,9 @@
                 <td>Status</td>
                 <td>
                     <select name="" id="taskStatus">
-                        <option value="1">active</option>
-                        <option value="0">inactive</option>
+                        <option value="open">active</option>
+                        <option value="In progress">In progress</option>
+                        <option value="closed">inactive</option>
                     </select>
                 </td>
             </tr>
@@ -85,7 +89,7 @@
                 </td>
             </tr>
             <tr><td colspan="2">
-                <button id="editTasks">Edit</button>
+                <button id="editTask">Save</button>
                 <button class="cancel">Cancel</button>
             </td></tr>
         </table>
@@ -95,6 +99,8 @@
 
 <script src="frontJs/jquery-1.12.0.min.js"></script>
 <script src="frontJs/main.js"></script>
+<script src="frontJs/users.js"></script>
+<script src="frontJs/tasks.js"></script>
 
 
 <style>

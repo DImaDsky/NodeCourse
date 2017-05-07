@@ -1,7 +1,18 @@
 "use strict";
 const express = require('express');
-const db = require('../mongodb/database');
 const app = module.exports = express();
+const {mongoose, db} = require('../mongodb/mongooseConnect');
+
+let userSchema = new mongoose.Schema({
+    name: String,
+    surname: String,
+    tel: Number
+});
+
+let User = db.model('users', userSchema);
+User.on('error', function(error) {
+    console.log(error);
+});
 
 let allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -17,13 +28,16 @@ let allowCrossDomain = function(req, res, next) {
 app.use(allowCrossDomain);
 
 function getAllUsers(res) {
-    db.read('users').then(users => {
+    User.find({}, null, (err, users)=>{
+        if(err){console.log(err)}
         res.json(users);
     });
 }
 
 app.post('/',(req, res) => {
-    db.create('users', {name:req.body.name,surname:req.body.surname,tel:req.body.tel}).then(err => {
+    let user = new User({name:req.body.name,surname:req.body.surname,tel:req.body.tel});
+    user.save((err, result)=>{
+        if(err){console.log(err)}
         getAllUsers(res);
     });
 });
@@ -35,14 +49,14 @@ app.get('/:id',(req, res) => {
     res.json(users[id]);
 });
 app.put('/:id',(req, res) => {
-    db.update('users', req.body.id, req.body.values).then( r => {
-        console.log('r',r);
+    User.update({_id: mongoose.Types.ObjectId(req.params.id)}, req.body.values, (err, result) => {
+        if(err){console.log(err);}
         getAllUsers(res);
     });
-
 });
 app.delete('/:id',(req, res) => {
-    db.delete('users', req.params.id).then( r => {
+    User.remove({_id: mongoose.Types.ObjectId(req.params.id)}, (err, result) => {
+        if(err){console.log(err);}
         getAllUsers(res);
     });
 });

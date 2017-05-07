@@ -1,7 +1,19 @@
 "use strict";
 const express = require('express');
-const db = require('../mongodb/database');
 const app = module.exports = express();
+const {mongoose, db} = require('../mongodb/mongooseConnect');
+
+let taskSchema = new mongoose.Schema({
+    name: String,
+    description: String,
+    status: String,
+    user: mongoose.Schema.Types.ObjectId
+});
+
+let Task = db.model('tasks', taskSchema);
+Task.on('error', function(error) {
+    console.log(error);
+});
 
 let allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -16,42 +28,53 @@ let allowCrossDomain = function(req, res, next) {
 };
 app.use(allowCrossDomain);
 
-function getAllUsers(res) {
-    db.read('users').then(users => {
-        res.json(users);
+function getAllRows(res) {
+    Task.find({}, null, (err, tasks)=>{
+        if(err){console.log(err)}
+        res.json(tasks);
     });
 }
 
 app.post('/',(req, res) => {
-    db.create('users', {name:req.body.name,surname:req.body.surname,tel:req.body.tel}).then(err => {
-        getAllUsers(res);
+    let task = new Task({name:req.body.name,description:req.body.description,status:req.body.status});
+    task.save((err, result)=>{
+        if(err){console.log(err)}
+        getAllRows(res);
     });
 });
 app.get('/',(req, res) => {
-    getAllUsers(res);
+    getAllRows(res);
 });
 app.get('/:id',(req, res) => {
-    let id = req.params.id;
-    res.json(users[id]);
+    Task.findById(req.params.id, null, null, (err, tasks)=>{
+        if(err){console.log(err)}
+        res.json(tasks);
+    });
+});
+app.get('/search/:val',(req, res) => {
+    Task.find({name: new RegExp(req.params.val, 'g')}, null, null, (err, tasks)=>{//`/${req.params.val}/i`
+        if(err){console.log(err)}
+        res.json(tasks);
+    });
 });
 app.put('/:id',(req, res) => {
-    db.update('users', req.body.id, req.body.values).then( r => {
-        console.log('r',r);
-        getAllUsers(res);
+    Task.update({_id: mongoose.Types.ObjectId(req.params.id)}, {$set:req.body.values}, (err, result) => {
+        if(err){console.log(err);}
+        getAllRows(res);
     });
-
 });
 app.delete('/:id',(req, res) => {
-    db.delete('users', req.params.id).then( r => {
-        getAllUsers(res);
+    Task.remove({_id: mongoose.Types.ObjectId(req.params.id)}, (err, result) => {
+        if(err){console.log(err);}
+        getAllRows(res);
     });
 });
 
-
 app.all('*', (req, res) => {
-    res.status(404).send('Not Found')
+    res.status(404).send('Not Found tasks')
 });
 
 app.use((err, req, res, next)=>{
+    debugger
     res.status(500).send('Server Error ' + err.message);
 });
