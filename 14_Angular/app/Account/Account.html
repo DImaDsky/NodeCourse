@@ -1,0 +1,35 @@
+<form name="vm.accountForm" novalidate>
+    <div class="form-group">
+        <label>Имя</label>
+        <input class="form-control" data-ng-model="vm.account.name" type="text" placeholder="Имя" required ng-minlength="3" name="name">
+    </div>
+    <div ng-messages="vm.accountForm.name.$error" ng-if="vm.accountForm.name.$dirty">
+        <div ng-message="required" class="alert alert-danger" role="alert">А где имя?</div>
+        <div ng-message="minlength" class="alert alert-danger" role="alert">Имя слишком короткое</div>
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input class="form-control" data-ng-model="vm.account.email"
+               data-ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/"
+               type="text" placeholder="Email" required ng-minlength="5" name="email">
+    </div>
+    <div ng-messages="vm.accountForm.email.$error" ng-if="vm.accountForm.email.$dirty">
+        <div ng-message="required" class="alert alert-danger" role="alert">А где email?</div>
+        <div ng-message="pattern" class="alert alert-danger">Это значение не похоже на email</div>
+    </div>
+
+    <div class="form-group">
+        <label>Телефон</label>
+        <input class="form-control" data-ng-model="vm.account.phone" type="text" placeholder="Телефон"
+               data-ng-pattern="/^\+[0-9]{10,12}$/" ng-minlength="8" name="phone">
+    </div>
+    <div ng-messages="vm.accountForm.phone.$error" ng-if="vm.accountForm.phone.$dirty">
+        <div ng-message="minlength" class="alert alert-danger" role="alert">Имя слишком короткое</div>
+        <div ng-message="pattern" class="alert alert-danger">Это значение не похоже на телефон</div>
+    </div>
+
+
+    <button type="submit" class="btn btn-default" data-ng-click="vm.addinfo(vm.accountForm)" data-ng-disabled="vm.pokemonForm.$invalid">Добавить
+    </button>
+</form>
