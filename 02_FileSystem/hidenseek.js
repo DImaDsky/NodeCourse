@@ -36,37 +36,7 @@ let fsPromise = {
         })
     }
 };
-/*
-fs.writeFilePromise = function (path, text, prevResult){
-    return new Promise(resolve=>{
-        fs.writeFile(path, text, (err)=>{
-            if(err) { console.log(err) }
-            resolve(prevResult)
-        })
-    });
-};
 
-fs.mkdirPromise = function (dir) {
-    return new Promise(resolve => {
-        fs.mkdir(dir, err =>{
-            if (err) {console.log('dir exists')}
-            resolve()
-        })
-    })
-};
-
-fs.readFilePromise = function (dir, encode) {
-    if(!fs.existsSync(dir)){
-        return;
-    }
-    return new Promise(resolve => {
-        fs.readFile(dir, encode, (err, data) => {
-            if (err) { throw err }
-            resolve(data);
-        })
-    })
-};
-*/
 exports.hide = function (hidePlace, pokemonList) {
         let dirPromises = [];
         if (!fs.existsSync(hidePlace)) {
