@@ -16,5 +16,7 @@ angular.module('myApp')
             }
             vm.accountForm.$setPristine();
         };
-
+    }).component('accountData', {
+        template: '<div>zz: {{sessionStorage.getItem("name")}}</div>',
+        controller: function() {},
     });
