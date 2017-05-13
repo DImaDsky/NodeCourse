@@ -1,4 +1,4 @@
-<form name="vm.accountForm" novalidate>
+<form name="vm.accountForm" novalidate ng-hide="accountData.name">
     <account-data></account-data>
     <div class="form-group">
         <label>Имя</label>
@@ -34,3 +34,18 @@
     <button type="submit" class="btn btn-default" data-ng-click="vm.addinfo(vm.accountForm)" data-ng-disabled="vm.pokemonForm.$invalid">Добавить
     </button>
 </form>
+
+<div ng-show="accountData.name">
+    <div class="form-group">
+        <div>Name</div>
+        <input class="form-control" value="{{accountData.name}}" disabled>
+    </div>
+    <div class="form-group">
+        <div>Email</div>
+        <input class="form-control" value="{{accountData.email}}" disabled>
+    </div>
+    <div class="form-group">
+        <div>Phone</div>
+        <input class="form-control" value="{{accountData.phone}}" disabled>
+    </div>
+</div>

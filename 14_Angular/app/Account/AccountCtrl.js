@@ -1,22 +1,21 @@
 'use strict';
 
 angular.module('myApp')
-    .controller('AccountCtrl', function () {
+    .controller('AccountCtrl', function ($scope, AccountService) {
         var vm = this;
 
         vm.account = {};
         vm.addinfo = function(data) {
-            console.log(data);
-            console.log(data.name.$modelValue);
 
-            sessionStorage.setItem('name', data.name.$modelValue);
-            sessionStorage.setItem('email', data.email.$modelValue);
-            if(data.phone.$modelValue){
-                sessionStorage.setItem('phone', data.phone.$modelValue);
-            }
+            AccountService.save($scope, data);
+
             vm.accountForm.$setPristine();
         };
+        //$scope.accountData = AccountService.read();
     }).component('accountData', {
-        template: '<div>zz: {{sessionStorage.getItem("name")}}</div>',
-        controller: function() {},
+
+        //template: '<div>zz: {{sessionStorage.getItem("name")}}</div>',
+        controller: function($scope, AccountService) {
+
+        },
     });
