@@ -1,0 +1,25 @@
+<div ng-if="!berryLoaded">
+    <span class="glyphicon glyphicon-refresh"></span>
+    Loading...
+</div>
+
+<div class="alert alert-danger" role="alert" ng-if="notfoundError">Покемон не найден</div>
+
+<div class="media" ng-if="berryLoaded">
+    <div class="media-body">
+
+        <h1 class="media-heading">{{berry.name | uppercase }}</h1>
+
+        <button class="btn btn-danger" ng-click="deleteberry(berry.objectId)">
+            <span class="glyphicon glyphicon-trash"></span>
+            Удалить
+        </button>
+        <a class="btn btn-primary" href="#!/editBerry/{{berry.objectId}}">
+            Редактировать
+        </a>
+
+    </div>
+</div>
+
+<div class="alert alert-success" role="alert" ng-if="deletionSuccess">Пока, ягодка!</div>
+<div class="alert alert-danger" role="alert" ng-if="deletionError">Нельзя съесть зелёную ягоду!</div>
