@@ -1,0 +1,16 @@
+<md-list>
+    <md-list-item ng-repeat="singlePokemon in $ctrl.pokemons">
+        <md-checkbox ng-model="item.done"></md-checkbox>
+        <pokemon-list-item pokemon="singlePokemon"></pokemon-list-item>
+        <!--<div class="md-list-item-text">-->
+            <!--<h3>{{item.title}}</h3>-->
+            <!--<p>{{item.description}}</p>-->
+        <!--</div>-->
+    </md-list-item>
+</md-list>
+
+<!--<div class="list-group">-->
+
+    <!--<pokemon-list-item pokemon="singlePokemon" ng-repeat="singlePokemon in $ctrl.pokemons"></pokemon-list-item>-->
+
+<!--</div>-->
