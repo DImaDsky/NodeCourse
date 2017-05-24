@@ -4,12 +4,11 @@
 const http = require('http');
 const https = require('https');
 const url = require('url');
-const querystring = require('querystring');
 
 const apiOptions = {
     hostname: 'netology.tomilomark.ru',
     port: 80,
-    path: '/api/users/hash',
+    path: '/api/v1/hash',
     method: 'POST',
     headers: {
         'Firstname': 'someName',
@@ -18,6 +17,11 @@ const apiOptions = {
 };
 
 let server = new http.Server( (req, res) => {
+    if(req.url == '/favicon.ico'){
+        res.end('no favicon');
+        return;
+    }
+
     let parsed = url.parse(req.url, true);
     let lastName = parsed.query.lastName;
 
@@ -25,14 +29,26 @@ let server = new http.Server( (req, res) => {
         res.end('no data');
     }
 
-    let postData = querystring.stringify({
-        lastName: lastName
+    let postData = JSON.stringify({
+        'lastName': lastName
     });
+
     apiOptions.headers.Firstname =  parsed.query.firstName;
 
     let apiReq = http.request(apiOptions, apiRes => {
-        console.log('apiRes', apiRes);//didnt find json response in apiRes
-        res.end('zzzzz');
+
+        apiRes.setEncoding('utf8');
+        apiRes.on('data', (chunk) => {
+            console.log(`BODY: ${chunk}`);
+            res.end(chunk);
+        });
+        apiRes.on('end', () => {
+            console.log('No more data in response.');
+        });
+    });
+
+    apiReq.on('error', (e) => {
+        console.error(`problem with request: ${e.message}`);
     });
 
     apiReq.write(postData);
