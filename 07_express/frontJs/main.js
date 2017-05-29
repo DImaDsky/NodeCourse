@@ -17,7 +17,7 @@ function sendReqRPC(data) {
 
 function showResponse(res) {
     var txt = '';
-    if ($('.apiType').val() === 'rpc'){
+    if ($('.apiType:checked').val() === 'rpc'){
         res = res.result;
     }
     res.forEach(function (item, i) {
@@ -29,7 +29,7 @@ function showResponse(res) {
 }
 
 $('#getAll').on('click', function () {
-    if ($('.apiType').val() === 'rpc'){
+    if ($('.apiType:checked').val() === 'rpc'){
         sendReqRPC({jsonrpc: 2.0, method: "read"});
         return;
     }
@@ -38,7 +38,7 @@ $('#getAll').on('click', function () {
 
 //ADD NEW
 $('#addNew').on('click', function () {
-    if ($('.apiType').val() === 'rpc'){
+    if ($('.apiType:checked').val() === 'rpc'){
         sendReqRPC({jsonrpc: 2.0, method: "create", params:{name:'NewName',score:0}});
         return;
     }
@@ -58,7 +58,7 @@ $('#usersList').on('click', '.edit', function (e) {
 $('#edit').on('click', function (e) {
     var id = $('#userId').val();
     var data = {name:$('#name').val(),score:$('#score').val(), id:id};
-    if ($('.apiType').val() === 'rpc'){
+    if ($('.apiType:checked').val() === 'rpc'){
         sendReqRPC({jsonrpc: 2.0, method: "update", params: data, id: id});
         return;
     }
@@ -71,7 +71,7 @@ $('#edit').on('click', function (e) {
 //DELETE
 $('#usersList').on('click', '.delete', function (e) {
     var id = $(e.target).parent('tr').data('id');
-    if ($('.apiType').val() === 'rpc'){
+    if ($('.apiType:checked').val() === 'rpc'){
         sendReqRPC({jsonrpc: 2.0, method: "remove", id: id});
         return;
     }
