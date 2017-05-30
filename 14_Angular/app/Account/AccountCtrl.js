@@ -6,16 +6,17 @@ angular.module('myApp')
 
         vm.account = {};
         vm.addinfo = function(data) {
-
-            AccountService.save($scope, data);
-
+            $scope.accountData = {
+                name: data.name.$modelValue,
+                email: data.email.$modelValue,
+                phone: data.phone.$modelValue
+            };
+            AccountService.save($scope.accountData);
             vm.accountForm.$setPristine();
         };
-        //$scope.accountData = AccountService.read();
+        $scope.accountData = AccountService.read();
     }).component('accountData', {
-
-        //template: '<div>zz: {{sessionStorage.getItem("name")}}</div>',
+        template: '<div>zz: ss</div>',
         controller: function($scope, AccountService) {
-
         },
     });

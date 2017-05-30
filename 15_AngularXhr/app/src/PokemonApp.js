@@ -36,8 +36,6 @@ angular
         "application-id": "5CAF4EE9-326C-6070-FF6D-E72278541500",
         "secret-key": "22656574-93DD-CAB8-FF95-A5935A106200"
     };
-    $httpProvider.defaults.url = 'ZZxcv'
-
 }])
 .factory('mySocket', function(socketFactory) {
   var myIoSocket = io.connect('https://netology-socket-io.herokuapp.com/');
